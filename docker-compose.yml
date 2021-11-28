@@ -3,6 +3,10 @@ version: "3"
 services:
   lb:
     image: haproxy
+    restart: always
+    depends_on:
+      - nodeapp1
+      - nodeapp2
     ports:
       - '8080:8080'
     volumes:
