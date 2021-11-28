@@ -45,13 +45,21 @@ module.exports = app => {
     res.send({ token })
   })
 
-  app.get('/auth/profile', async (req, res) => {
-    try {
-      const userJwt = jwt.verify(req.headers.jwt, process.env.JWT_SECRET)
-      const user = await User.findById(userJwt.id)
+  app.get(
+    '/auth/profile',
+    async (req, res, next) => {
+      try {
+        const userJwt = jwt.verify(req.headers.jwt, process.env.JWT_SECRET)
+        const user = await User.findById(userJwt.id)
+        req.user = user
+        next()
+      } catch (e) {
+        res.status(400).send({ message: 'Token is invalid' })
+      }
+    },
+    async (req, res) => {
+      const user = await User.findById(req.user.id, { password: 0 })
       res.send(user)
-    } catch (e) {
-      res.status(400).send({ message: 'Token is invalid' })
-    }
-  })
+    },
+  )
 }
