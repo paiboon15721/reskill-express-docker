@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')
 const morgan = require('morgan')
 const mongoose = require('mongoose')
+const bodyParser = require('body-parser')
 
 const { initMongoose } = require('./init-mongoose')
 
@@ -35,6 +36,12 @@ app.get('/employees/:id', async (req, res) => {
 app.delete('/employees/:id', async (req, res) => {
   const employee = await Employee.findByIdAndDelete(req.params.id)
   res.send(employee)
+})
+
+app.post('/employees', bodyParser.json(), async (req, res) => {
+  console.log('req', req.body)
+  // console.log(body)
+  res.send('create sucess')
 })
 
 const port = process.env.PORT || 3000
