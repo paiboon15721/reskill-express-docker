@@ -7,6 +7,9 @@ services:
     depends_on:
       - nodeapp1
       - nodeapp2
+      - nodeapp3
+      - nodeapp4
+      - nodeapp5
     ports:
       - '8080:8080'
     volumes:
@@ -33,6 +36,35 @@ services:
       - MONGO_DB_HOST=mongo-db
       - JWT_SECRET=aaa
       - APPID=2222
+  nodeapp3:
+    image: nodeapp
+    depends_on: 
+      - mongo-db
+    restart: always
+    environment:
+      - MONGO_DB_HOST=mongo-db
+      - JWT_SECRET=aaa
+      - APPID=3333
+
+  nodeapp4:
+    image: nodeapp
+    depends_on: 
+      - mongo-db
+    restart: always
+    environment:
+      - MONGO_DB_HOST=mongo-db
+      - JWT_SECRET=aaa
+      - APPID=4444
+
+  nodeapp5:
+    image: nodeapp
+    depends_on: 
+      - mongo-db
+    restart: always
+    environment:
+      - MONGO_DB_HOST=mongo-db
+      - JWT_SECRET=aaa
+      - APPID=5555
     # ports:
     #   - '4000:3000'
 
