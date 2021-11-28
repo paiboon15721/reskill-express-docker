@@ -3,11 +3,14 @@ version: "3"
 services:
   nodeapp:
     image: nodeapp
+    depends_on: 
+      - mongo-db
+    restart: always
     environment:
       - MONGO_DB_HOST=mongo-db
       - JWT_SECRET=aaa
     ports:
-      - '3000:3000'
+      - '4000:3000'
 
   mongo-db:
     image: mongo

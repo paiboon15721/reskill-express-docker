@@ -13,7 +13,7 @@ app.use(morgan('combined'))
 app.use('/', express.static(`${__dirname}/public`))
 
 app.get('/', (req, res) => {
-  res.send({ hello: 'world' })
+  res.send({ hello: 'world', appId: process.env.APPID })
 })
 
 controllers.forEach(x => x(app))
