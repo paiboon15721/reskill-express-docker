@@ -7,16 +7,6 @@ const app = async () => {
   await initMongoose()
   const { Employee } = mongoose.models
   const employees = await Employee.find().lean()
-  // const mappedEmps = employees
-  //   .filter(x => x.age > 40)
-  //   .map(x => ({ ...x, name: `Mr. ${x.name}` }))
-  //   .map(x => ({ ...x, age: x.age + 30 }))
-  //   .reduce((acc, curr) => (acc += curr.salary), 0)
-  const res = {
-    HR: 2142424,
-    Manager: 2343242342,
-    Developer: 324324324324,
-  }
   const mappedEmps = _.pipe(
     _.filter(x => x.age > 40),
     _.map(x => ({ ...x, name: `Mr. ${x.name}` })),
@@ -31,6 +21,25 @@ const app = async () => {
     ),
   )(employees)
   console.log(mappedEmps)
+
+  const pipeline = [
+    { $match: { age: { $gt: 40 } } },
+    // { $match: { salary: { $gt: 40000 } } },
+    {
+      $group: {
+        _id: '$role',
+        sum: { $sum: 1 },
+        sumSalary: { $sum: '$salary' },
+      },
+    },
+  ]
+  const aggregate = await Employee.aggregate(pipeline)
+  console.log(
+    aggregate.reduce((acc, curr) => {
+      acc[curr._id] = curr.sumSalary
+      return acc
+    }, {}),
+  )
 }
 
 app()
