@@ -1,7 +1,14 @@
 version: "3"
 
 services:
-  nodeapp:
+  lb:
+    image: haproxy
+    ports:
+      - '8080:8080'
+    volumes:
+      - ./haproxy:/usr/local/etc/haproxy
+
+  nodeapp1:
     image: nodeapp
     depends_on: 
       - mongo-db
@@ -9,8 +16,21 @@ services:
     environment:
       - MONGO_DB_HOST=mongo-db
       - JWT_SECRET=aaa
-    ports:
-      - '4000:3000'
+      - APPID=1111
+    # ports:
+    #   - '4000:3000'
+
+  nodeapp2:
+    image: nodeapp
+    depends_on: 
+      - mongo-db
+    restart: always
+    environment:
+      - MONGO_DB_HOST=mongo-db
+      - JWT_SECRET=aaa
+      - APPID=2222
+    # ports:
+    #   - '4000:3000'
 
   mongo-db:
     image: mongo
