@@ -21,6 +21,22 @@ app.get('/employees', async (req, res) => {
   res.send(employees)
 })
 
+app.get('/employees/:id', async (req, res) => {
+  const employee = await Employee.findById(req.params.id)
+  if (!employee) {
+    res.status(404).send({
+      message: 'Data not found',
+    })
+    return
+  }
+  res.send(employee)
+})
+
+app.delete('/employees/:id', async (req, res) => {
+  const employee = await Employee.findByIdAndDelete(req.params.id)
+  res.send(employee)
+})
+
 const port = process.env.PORT || 3000
 initMongoose().then(() => {
   app.listen(port, () => {

@@ -5,3 +5,11 @@ GET {{baseUrl}}
 ###
 
 GET {{baseUrl}}/employees
+
+###
+
+GET {{baseUrl}}/employees/61a2f960bbb5c116801895aa
+
+###
+
+DELETE {{baseUrl}}/employees/61a2f960bbb5c116801895aa
