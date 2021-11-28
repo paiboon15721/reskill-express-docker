@@ -4,6 +4,16 @@ POST {{baseUrl}}/register
 Content-Type: application/json
 
 {
-  "email": "john3@gmail.com",
+  "email": "john4@gmail.com",
+  "password": "1234"
+}
+
+###
+
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "john4@gmail.com",
   "password": "1234"
 }

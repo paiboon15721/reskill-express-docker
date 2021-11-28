@@ -1,14 +1,7 @@
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
-
-// bcrypt.hash('1234', 10).then(hash => {
-//   console.log(hash)
-
-//   bcrypt.compare('12345', hash).then(res => {
-//     console.log('result', res)
-//   })
-// })
+const jwt = require('jsonwebtoken')
 
 module.exports = app => {
   const { User } = mongoose.models
@@ -23,5 +16,32 @@ module.exports = app => {
     const hash = await bcrypt.hash(body.password, 10)
     const user = await User.create({ ...body, password: hash })
     res.send(user)
+  })
+
+  app.post('/auth/login', bodyParser.json(), async (req, res) => {
+    const { body } = req
+    const user = await User.findOne({ email: body.email })
+    if (!user) {
+      res.status(400).send({
+        message: 'Email or password is invalid',
+      })
+      return
+    }
+
+    const result = await bcrypt.compare(body.password, user.password)
+
+    if (!result) {
+      res.status(400).send({
+        message: 'Email or password is invalid',
+      })
+      return
+    }
+
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+    )
+
+    res.send({ token })
   })
 }
