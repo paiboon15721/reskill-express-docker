@@ -12,7 +12,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null))
 app.use(morgan('combined'))
 app.use('/', express.static(`${__dirname}/public`))
 
-app.get('/', (req, res) => {
+app.get('/appid', (req, res) => {
   res.send({ hello: 'world', appId: process.env.APPID })
 })
 
