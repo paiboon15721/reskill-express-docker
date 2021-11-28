@@ -17,3 +17,8 @@ Content-Type: application/json
   "email": "john4@gmail.com",
   "password": "1234"
 }
+
+###
+
+GET {{baseUrl}}/profile
+jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTMyMDM3MmFmOWFjMzlmMjBkNWY1MSIsImVtYWlsIjoiam9objRAZ21haWwuY29tIiwiaWF0IjoxNjM4MDgwNTk4fQ.QdGmTT0bgZPr8MED_L0bzip2-W2gVKmAaHl1DjcMct4

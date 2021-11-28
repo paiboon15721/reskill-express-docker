@@ -44,4 +44,14 @@ module.exports = app => {
 
     res.send({ token })
   })
+
+  app.get('/auth/profile', async (req, res) => {
+    try {
+      const userJwt = jwt.verify(req.headers.jwt, process.env.JWT_SECRET)
+      const user = await User.findById(userJwt.id)
+      res.send(user)
+    } catch (e) {
+      res.status(400).send({ message: 'Token is invalid' })
+    }
+  })
 }
