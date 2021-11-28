@@ -1,0 +1,21 @@
+{
+  "name": "reskill-express-docker",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "sync": "git reset --hard origin/main && git pull",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/paiboon15721/reskill-express-docker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/paiboon15721/reskill-express-docker/issues"
+  },
+  "homepage": "https://github.com/paiboon15721/reskill-express-docker#readme"
+}
