@@ -23,10 +23,12 @@ fs.writeFileSync(`${__dirname}/employees.json`, JSON.stringify(emps))
 
 const main = async () => {
   await initMongoose()
+  await mongoose.connection.dropDatabase()
   const { Employee } = mongoose.models
   await Employee.insertMany(emps)
   const employees = await Employee.find()
   console.log(employees)
+  process.exit(0)
 }
 
 main()
