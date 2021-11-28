@@ -27,3 +27,13 @@ Content-Type: application/json
   "salary":40038,
   "role":"Manager"
 }
+
+###
+
+PUT {{baseUrl}}/employees/61a30284b1d1deae8477beb9
+Content-Type: application/json
+
+{
+  "name": "new 3 John",
+  "lastName": "new last name"
+}

@@ -43,6 +43,13 @@ app.post('/employees', bodyParser.json(), async (req, res) => {
   res.send(employee)
 })
 
+app.put('/employees/:id', bodyParser.json(), async (req, res) => {
+  const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  })
+  res.send(employee)
+})
+
 const port = process.env.PORT || 3000
 initMongoose().then(() => {
   app.listen(port, () => {
