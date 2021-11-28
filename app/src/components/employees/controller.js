@@ -1,5 +1,6 @@
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const { requireAuth } = require('../auth/middleware')
 
 module.exports = app => {
   const { Employee } = mongoose.models
@@ -20,20 +21,29 @@ module.exports = app => {
     res.send(employee)
   })
 
-  app.delete('/employees/:id', async (req, res) => {
+  app.delete('/employees/:id', requireAuth, async (req, res) => {
     const employee = await Employee.findByIdAndDelete(req.params.id)
     res.send(employee)
   })
 
-  app.post('/employees', bodyParser.json(), async (req, res) => {
+  app.post('/employees', requireAuth, bodyParser.json(), async (req, res) => {
     const employee = await Employee.create(req.body)
     res.send(employee)
   })
 
-  app.put('/employees/:id', bodyParser.json(), async (req, res) => {
-    const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    })
-    res.send(employee)
-  })
+  app.put(
+    '/employees/:id',
+    requireAuth,
+    bodyParser.json(),
+    async (req, res) => {
+      const employee = await Employee.findByIdAndUpdate(
+        req.params.id,
+        req.body,
+        {
+          new: true,
+        },
+      )
+      res.send(employee)
+    },
+  )
 }

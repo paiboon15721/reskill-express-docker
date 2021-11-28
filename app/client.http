@@ -18,6 +18,7 @@ DELETE {{baseUrl}}/employees/61a2f960bbb5c116801895aa
 
 POST {{baseUrl}}/employees
 Content-Type: application/json
+jwt: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYxYTMyMDM3MmFmOWFjMzlmMjBkNWY1MSIsImVtYWlsIjoiam9objRAZ21haWwuY29tIiwiaWF0IjoxNjM4MDgwNTk4fQ.QdGmTT0bgZPr8MED_L0bzip2-W2gVKmAaHl1DjcMct4
 
 {
   "name":"John",
