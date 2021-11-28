@@ -39,9 +39,8 @@ app.delete('/employees/:id', async (req, res) => {
 })
 
 app.post('/employees', bodyParser.json(), async (req, res) => {
-  console.log('req', req.body)
-  // console.log(body)
-  res.send('create sucess')
+  const employee = await Employee.create(req.body)
+  res.send(employee)
 })
 
 const port = process.env.PORT || 3000
