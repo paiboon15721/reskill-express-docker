@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 require('./models/employee')
+require('./models/user')
 
 exports.initMongoose = () =>
   new Promise((resolve, reject) => {
