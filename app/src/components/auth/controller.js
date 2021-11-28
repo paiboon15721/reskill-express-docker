@@ -2,6 +2,7 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const { requireAuth } = require('./middleware')
 
 module.exports = app => {
   const { User } = mongoose.models
@@ -45,21 +46,8 @@ module.exports = app => {
     res.send({ token })
   })
 
-  app.get(
-    '/auth/profile',
-    async (req, res, next) => {
-      try {
-        const userJwt = jwt.verify(req.headers.jwt, process.env.JWT_SECRET)
-        const user = await User.findById(userJwt.id)
-        req.user = user
-        next()
-      } catch (e) {
-        res.status(400).send({ message: 'Token is invalid' })
-      }
-    },
-    async (req, res) => {
-      const user = await User.findById(req.user.id, { password: 0 })
-      res.send(user)
-    },
-  )
+  app.get('/auth/profile', requireAuth, async (req, res) => {
+    const user = await User.findById(req.user.id, { password: 0 })
+    res.send(user)
+  })
 }
