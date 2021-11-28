@@ -1,5 +1,10 @@
+require('dotenv').config()
 const faker = require('faker')
 const _ = require('lodash')
+const fs = require('fs')
+const mongoose = require('mongoose')
+
+const { initMongoose } = require('../init-mongoose')
 
 const roles = ['Manager', 'Developer', 'SA', 'HR']
 
@@ -14,8 +19,14 @@ const createEmployee = () => ({
 
 const emps = _.range(100).map(createEmployee)
 
-console.log(emps)
-// console.log(createEmployee())
-// console.log(createEmployee())
-// console.log(createEmployee())
-// console.log(createEmployee())
+fs.writeFileSync(`${__dirname}/employees.json`, JSON.stringify(emps))
+
+const main = async () => {
+  await initMongoose()
+  const { Employee } = mongoose.models
+  await Employee.insertMany(emps)
+  const employees = await Employee.find()
+  console.log(employees)
+}
+
+main()

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 
+require('./models/employee')
+
 exports.initMongoose = () =>
   new Promise((resolve, reject) => {
     const url = `mongodb://${process.env.MONGO_DB_HOST}:27017/reskill`

@@ -1,5 +1,3 @@
-process.env.MONGO_DB_HOST = 'localhost'
-
 const mongoose = require('mongoose')
 
 require('./models/employee')
